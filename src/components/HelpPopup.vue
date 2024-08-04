@@ -94,7 +94,7 @@ html[data-theme='dark'] .help-icon {
   box-shadow: none;
 
   &:focus-visible {
-    outline: 2px solid red;
+    outline: var(--pico-outline-width) solid var(--pico-primary-focus);
   }
 
   .help-icon {
