@@ -1,6 +1,5 @@
 <script setup lang="ts">
-
-import {onMounted, reactive, Ref, ref, watch} from 'vue';
+import { onMounted, reactive, type Ref, ref, watchEffect } from 'vue';
 
 const levelUps = new Map([
   [1, 4],
@@ -27,7 +26,7 @@ const bonuses = ref(0);
 const levelUp = ref(0);
 
 const scoreClass = ref('');
-const scoreStyle = reactive({width: '10%'});
+const scoreStyle = reactive({ width: '10%' });
 
 const reset = () => {
   traitsInput.value = '';
@@ -44,7 +43,7 @@ const reset = () => {
 onMounted(reset);
 
 const extractTraits = (str: string): number[] => {
-  let matches: number[] = [];
+  const matches: number[] = [];
 
   let m;
   while ((m = regex.exec(str))) {
@@ -61,7 +60,7 @@ const extractTraits = (str: string): number[] => {
 const calcExpeditions = (expeditions: number): number => {
   let result = 0;
 
-  for (let [lvl, exp] of levelUps.entries()) {
+  for (const [lvl, exp] of levelUps.entries()) {
     if (exp > expeditions) {
       break;
     }
@@ -72,19 +71,16 @@ const calcExpeditions = (expeditions: number): number => {
   return result;
 };
 
-const telemetryImg = import.meta.env.VITE_TELEMETRY_IMG;
-
-watch([traitsInput, statsInput, expeditions], () => {
+watchEffect(() => {
   stats.value = extractTraits(statsInput.value).reduce((sum, cur) => cur + sum, 0);
   bonuses.value = extractTraits(traitsInput.value).reduce((sum, cur) => cur + sum, 0);
   levelUp.value = calcExpeditions(expeditions.value ?? 0);
-  baseStat.value = stats.value - bonuses.value - (6 * levelUp.value);
+  baseStat.value = stats.value - bonuses.value - 6 * levelUp.value;
   validStat.value = Math.max(-5, Math.min(14, baseStat.value));
-}, {immediate: true});
+});
 
-watch(validStat, (value) => {
-
-  value += 5; // for easy math
+watchEffect(() => {
+  const value = validStat.value + 5; // for easy math
 
   if (value < 5) {
     scoreClass.value = 'bg-danger';
@@ -96,9 +92,8 @@ watch(validStat, (value) => {
     scoreClass.value = 'bg-success';
   }
 
-  scoreStyle.width = `${Math.round((value * (100 - 10)) / (14 - (-5))) + 10}%`;
-}, {immediate: true});
-
+  scoreStyle.width = `${Math.round((value * (100 - 10)) / (14 - -5)) + 10}%`;
+});
 </script>
 
 <template>
@@ -107,69 +102,144 @@ watch(validStat, (value) => {
       <h1 class="text-center h2">NMS Frigate Calc</h1>
 
       <div class="col-sm-7 col-md-5 col-lg-4 col-xl-3">
-
         <div class="mt-3 input-group">
           <div class="form-floating">
-            <input type="text" class="form-control" id="stats" v-model.trim="statsInput" inputmode="numeric"/>
-            <label for="stats" class="form-label">Stats</label>
+            <input
+              type="text"
+              class="form-control"
+              id="stats"
+              v-model.trim="statsInput"
+              inputmode="numeric"
+            />
+            <label
+              for="stats"
+              class="form-label"
+              >Stats</label
+            >
           </div>
-          <span class="input-group-text" title="Sum of Stats points">{{ stats }}</span>
+          <span
+            class="input-group-text"
+            title="Sum of Stats points"
+            >{{ stats }}</span
+          >
         </div>
 
         <div class="mt-3 input-group">
           <div class="form-floating">
-            <input type="text" class="form-control" id="traits" v-model.trim="traitsInput" inputmode="numeric"/>
-            <label for="traits" class="form-label">Traits</label>
+            <input
+              type="text"
+              class="form-control"
+              id="traits"
+              v-model.trim="traitsInput"
+              inputmode="numeric"
+            />
+            <label
+              for="traits"
+              class="form-label"
+              >Traits</label
+            >
           </div>
-          <span class="input-group-text" title="Sum of Bonuses points">{{ bonuses }}</span>
+          <span
+            class="input-group-text"
+            title="Sum of Bonuses points"
+            >{{ bonuses }}</span
+          >
         </div>
         <div class="form-text text-muted text-center">Without fuel and time modifiers</div>
 
         <div class="mt-3 input-group">
           <div class="form-floating">
-            <input type="number" class="form-control" min="0" id="expeditions" v-model="expeditions"/>
-            <label for="expeditions" class="form-label">Expeditions:</label>
+            <input
+              type="number"
+              class="form-control"
+              min="0"
+              id="expeditions"
+              v-model="expeditions"
+            />
+            <label
+              for="expeditions"
+              class="form-label"
+              >Expeditions:</label
+            >
           </div>
-          <span class="input-group-text" title="Number of levels up">{{ levelUp }}</span>
+          <span
+            class="input-group-text"
+            title="Number of levels up"
+            >{{ levelUp }}</span
+          >
         </div>
 
         <div class="my-3 text-center fw-bold">
-          <div class="progress" style="height: 2rem">
-            <div class="progress-bar" role="progressbar" :class="scoreClass" :style="scoreStyle" aria-label="Score" :aria-valuenow="baseStat" aria-valuemin="-5" aria-valuemax="14">{{ validStat }}</div>
+          <div
+            class="progress"
+            style="height: 2rem"
+          >
+            <div
+              class="progress-bar"
+              role="progressbar"
+              :class="scoreClass"
+              :style="scoreStyle"
+              aria-label="Score"
+              :aria-valuenow="baseStat"
+              aria-valuemin="-5"
+              aria-valuemax="14"
+            >
+              {{ validStat }}
+            </div>
           </div>
         </div>
 
         <div class="mb-3 text-center d-grid">
-          <button @click="reset" class="btn btn-warning" data-umami-event="reset" data-tianji-event="reset">Reset</button>
+          <button
+            @click="reset"
+            class="btn btn-warning"
+          >
+            Reset
+          </button>
         </div>
 
-        <div class="alert alert-primary text-center" role="alert">
+        <div
+          class="alert alert-primary text-center"
+          role="alert"
+        >
           Provide
           <mark>stats</mark>
           and
           <mark>traits</mark>
-          as positive or negative integers.
-          Any other chars will be ignored. eg: <span class="font-monospace">"1,2.3 -4"</span>
+          as positive or negative integers. Any other chars will be ignored. eg:
+          <span class="font-monospace">"1,2.3 -4"</span>
         </div>
-
-      </div>
-    </div>
-    <div class="row" v-if="telemetryImg">
-      <div class="telemetry">
-        <img :src="telemetryImg" alt="">
       </div>
     </div>
     <div class="row">
       <div class="col mt-3 d-flex flex-column align-items-center">
         <div class="lead">Formula sources</div>
-        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1505175794" target="_blank" data-umami-event="steam" data-tianji-event="steam">Frigate Buyer's Guide - How to Pick the Best Ships (and avoid "Lemons")</a>
-        <a href="https://www.reddit.com/r/NoMansSkyTheGame/comments/knjokc/a_guide_to_evaluating_frigate_stats/" target="_blank" data-umami-event="reddit" data-tianji-event="reddit">A Guide to Evaluating Frigate Stats</a>
+        <a
+          href="https://steamcommunity.com/sharedfiles/filedetails/?id=1505175794"
+          target="_blank"
+          >Frigate Buyer's Guide - How to Pick the Best Ships (and avoid "Lemons")</a
+        >
+        <a
+          href="https://www.reddit.com/r/NoMansSkyTheGame/comments/knjokc/a_guide_to_evaluating_frigate_stats/"
+          target="_blank"
+          >A Guide to Evaluating Frigate Stats</a
+        >
       </div>
     </div>
     <div class="row">
       <div class="col text-center mt-5">
-        <a href="https://github.com/gander/nms-frigate-calc/issues" target="_blank" class=" d-flex flex-column align-items-center" data-umami-event="github" data-tianji-event="github">
-          <img src="../assets/github.svg" alt="GitHub" width="24" height="24" class="d-inline-block align-text-top me-1"/>
+        <a
+          href="https://github.com/gander/nms-frigate-calc/issues"
+          target="_blank"
+          class="d-flex flex-column align-items-center"
+        >
+          <img
+            src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"
+            alt="GitHub"
+            class="d-inline-block align-text-top me-1"
+            height="24"
+            width="24"
+          />
           Report Bug
         </a>
       </div>
@@ -183,8 +253,5 @@ watch(validStat, (value) => {
   display: flex;
   justify-content: center;
   cursor: help;
-}
-.telemetry {
-  text-align: center;
 }
 </style>

@@ -7,35 +7,20 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "release": "release-it --only-version"
-  },
-  "release-it": {
-    "git": {
-      "requireBranch": "master"
-    },
-    "npm": {
-      "publish": false,
-      "ignoreVersion": true
-    }
+    "format": "prettier --write src/"
   },
   "dependencies": {
-    "@sentry/vue": "^7.107.0",
     "bootstrap": "^5.3.3",
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@tsconfig/node18": "^18.2.2",
     "@types/bootstrap": "^5.2.10",
-    "@types/node": "^20.11.30",
+    "@types/node": "^22.1.0",
     "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/tsconfig": "^0.5.1",
-    "npm-run-all2": "^6.1.2",
-    "release-it": "^17.1.1",
+    "prettier": "^3.3.3",
     "sass": "^1.72.0",
-    "typescript": "~5.4.2",
+    "typescript": "5.5.4",
     "vite": "^5.2.0",
-    "vite-plugin-html-config": "^1.0.11",
-    "vite-plugin-pwa": "^0.19.5",
     "vue-tsc": "^2.0.7"
   }
 }
