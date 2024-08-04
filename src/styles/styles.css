@@ -1,0 +1,13 @@
+.container {
+  margin-block-start: 1rem;
+  margin-block-end: 5rem;
+  max-width: 600px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: bold;
+}
