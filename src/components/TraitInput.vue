@@ -2,10 +2,6 @@
 import { isNumberInput } from '@/helpers/validation';
 import { computed } from 'vue';
 
-defineProps<{
-  totalTraits: number;
-}>();
-
 const emit = defineEmits(['remove']);
 
 const model = defineModel<number>({ required: true });
@@ -22,7 +18,6 @@ const isValidInput = computed(() => isNumberInput(model.value.toString()));
       type="text"
     />
     <button
-      :disabled="totalTraits === 1"
       class="remove-button"
       @click="emit('remove')"
     >
