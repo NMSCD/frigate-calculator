@@ -62,7 +62,7 @@ const progressClassName = computed(() => {
 <template>
   <header>
     <NavBar />
-    <h1 class="text-center">NMS Frigate Calculator</h1>
+    <h1 class="text-center">Frigate Calculator</h1>
   </header>
 
   <main>
