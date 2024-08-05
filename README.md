@@ -1,4 +1,4 @@
-# NMS Frigate Calculator
+# Frigate Calculator
 
 This app calculates how good a frigate is.
 
