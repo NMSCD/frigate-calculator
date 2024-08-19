@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@picocss/pico": "^2.0.6",
-    "vue": "^3.4.21"
+    "vue": "^3.4.38"
   },
   "devDependencies": {
     "@types/node": "^22.4.1",
