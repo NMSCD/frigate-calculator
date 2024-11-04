@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/node": "^22.8.1",
     "@vitejs/plugin-vue": "^5.1.4",
-    "@vueuse/core": "^11.1.0",
+    "@vueuse/core": "^11.2.0",
     "prettier": "^3.3.3",
     "typescript": "5.6.3",
     "vite": "^5.4.10",
