@@ -138,13 +138,13 @@ const progressClassName = computed(() => {
     <div class="credits text-center">
       Forked from nms-frigate-calc by
       <a
-        href="https://www.reddit.com/user/GanderPL/"
+        href="https://github.com/gander/"
         target="_blank"
         >gander</a
       >
       <br />
       (<a
-        href="https://nms-frigate-calc.gander.dev/"
+        href="https://nms.gander.tools/"
         target="_blank"
         >Website</a
       >
