@@ -89,6 +89,7 @@ html[data-theme='dark'] .help-icon {
 
 .help-button {
   padding: 0;
+  padding-inline-end: 0.15rem;
   background-color: transparent;
   border: none;
   box-shadow: none;
