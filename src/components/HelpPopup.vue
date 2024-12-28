@@ -68,7 +68,6 @@ const closeModal = () => dialog.value?.close();
             <Transition>
               <img
                 v-if="openedOnce"
-                v-show="!isLoading"
                 :alt="`Where to find ${input}`"
                 :src="imageMapping[input]"
                 loading="lazy"
