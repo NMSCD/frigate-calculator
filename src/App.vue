@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import NavBar from './components/NavBar.vue';
 import TraitInput from './components/TraitInput.vue';
 import StatInput from './components/StatInput.vue';
 import { isNumberInput } from './helpers/validation';
 import HelpPopup from './components/HelpPopup.vue';
+import { useI18n } from '@/hooks/useI18n';
+import { usePageDataStore } from '@/stores/pageData';
+import { storeToRefs } from 'pinia';
+
+const pageData = usePageDataStore();
+const { selectedLanguage } = storeToRefs(pageData);
+
+const { t } = useI18n();
 
 const levelUps = [4, 8, 15, 25, 30, 35, 40, 45, 50, 55]; // NoSonar these are given by the game
 
@@ -18,8 +26,23 @@ const traitValues = ref<number[]>([0]);
 const addTrait = () => traitValues.value.push(0);
 const removeTrait = (index: number) => (traitValues.value = traitValues.value.filter((_, idx) => idx !== index));
 
-const stats = ['Combat', 'Exploration', 'Industrial', 'Trade'];
-const statValues = ref<number[]>(Array.from({ length: stats.length }, () => 0));
+const stats = ref([
+  t('translation.combat'),
+  t('translation.exploration'),
+  t('translation.industrial'),
+  t('translation.trade'),
+]);
+
+watch(selectedLanguage, () => {
+  stats.value = [
+    t('translation.combat'),
+    t('translation.exploration'),
+    t('translation.industrial'),
+    t('translation.trade'),
+  ];
+});
+
+const statValues = ref<number[]>(Array.from({ length: stats.value.length }, () => 0));
 
 const expeditionCount = ref(0);
 const isExpeditionCountValid = computed(() => isNumberInput(expeditionCount.value.toString()));
@@ -62,14 +85,14 @@ const progressClassName = computed(() => {
 <template>
   <header>
     <NavBar />
-    <h1 class="text-center">Frigate Calculator</h1>
+    <h1 class="text-center">{{ t('translation.title') }}</h1>
   </header>
 
   <main>
     <form @submit.prevent>
       <fieldset>
         <legend>
-          <span>Raw Frigate Stats</span>
+          <span>{{ t('translation.statsField') }}</span>
           <HelpPopup input="stats" />
         </legend>
 
@@ -80,12 +103,12 @@ const progressClassName = computed(() => {
             :placeholder="stat"
           />
         </div>
-        <p>Total Base Stats: {{ combinedStats }}</p>
+        <p>{{ t('translation.totalbaseStats') }} {{ combinedStats }}</p>
       </fieldset>
 
       <fieldset>
         <legend>
-          <span>Traits (except Fuel & Duration)</span>
+          <span>{{ t('translation.traitsField') }}</span>
           <HelpPopup input="traits" />
         </legend>
         <div class="trait-list">
@@ -100,28 +123,29 @@ const progressClassName = computed(() => {
           class="add-trait-button"
           @click="addTrait"
         >
-          Add Trait
+        {{ t('translation.addtrait') }}
         </button>
-        <p>Total Bonus Points: {{ combinedTraits }}</p>
+        <p>{{ t('translation.totalBonusPoints') }} {{ combinedTraits }}</p>
       </fieldset>
 
       <fieldset>
         <legend>
-          <span>Amount of Expeditions</span>
+          <span>{{ t('translation.expAmmount') }}</span>
           <HelpPopup input="expeditions" />
         </legend>
         <input
           v-model.trim.number="expeditionCount"
           :aria-invalid="!isExpeditionCountValid || undefined"
           type="text"
-          placeholder="Expeditions"
+          :placeholder="t('translation.expeditions')"
         />
-        <p>Total Rank-Ups: {{ calculatedExpeditionLevel }}</p>
+
+        <p>{{ t('translation.totalRankUps') }} {{ calculatedExpeditionLevel }}</p>
       </fieldset>
     </form>
 
     <p>
-      Frigate score (-5 – 14): <output class="text-bold">{{ calculatedBaseStat }}</output>
+      {{ t('translation.frigscore') }} <output class="text-bold">{{ calculatedBaseStat }}</output>
     </p>
 
     <progress
@@ -136,7 +160,7 @@ const progressClassName = computed(() => {
 
   <footer>
     <div class="credits text-center">
-      Forked from nms-frigate-calc by
+      {{ t('translation.forkedfrom') }}
       <a
         href="https://github.com/gander/"
         target="_blank"
@@ -146,7 +170,7 @@ const progressClassName = computed(() => {
       (<a
         href="https://nms.gander.tools/"
         target="_blank"
-        >Website</a
+        >{{ t('translation.website') }}</a
       >
       |
       <a
@@ -157,20 +181,20 @@ const progressClassName = computed(() => {
     </div>
 
     <div class="sources">
-      <p>Formula sources:</p>
+      <p>{{ t('translation.formula') }}</p>
       <ul>
         <li>
           <a
             href="https://steamcommunity.com/sharedfiles/filedetails/?id=1505175794"
             target="_blank"
-            >Frigate Buyer's Guide - How to Pick the Best Ships (and avoid "Lemons")</a
+            >{{ t('translation.buyersguide') }}</a
           >
         </li>
         <li>
           <a
             href="https://www.reddit.com/r/NoMansSkyTheGame/comments/knjokc/a_guide_to_evaluating_frigate_stats/"
             target="_blank"
-            >A Guide to Evaluating Frigate Stats</a
+            >{{ t('translation.guide') }}</a
           >
         </li>
       </ul>
