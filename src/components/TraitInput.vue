@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { isNumberInput } from '@/helpers/validation';
 import { computed } from 'vue';
+import { useI18n } from '@/hooks/useI18n';
+
+const { t } = useI18n();
 
 const emit = defineEmits(['remove']);
 
@@ -14,7 +17,7 @@ const isValidInput = computed(() => isNumberInput(model.value.toString()));
     <input
       v-model.trim.number="model"
       :aria-invalid="!isValidInput || undefined"
-      placeholder="Trait Value"
+      :placeholder="t('translation.traitvalue')"
       type="text"
     />
     <button

@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import expeditionHelp from '@/assets/expeditions.webp';
 import statsHelp from '@/assets/stats.webp';
 import traitsHelp from '@/assets/traits.webp';
 import { useActiveElement } from '@vueuse/core';
+import { useI18n } from '@/hooks/useI18n';
 
-defineProps<{
+const { t } = useI18n();
+
+const props = defineProps<{
   input: 'expeditions' | 'stats' | 'traits';
 }>();
 
@@ -27,16 +30,26 @@ const showModal = () => {
   openedOnce.value = true;
 };
 const closeModal = () => dialog.value?.close();
+
+const translatedInput = computed(() => {
+  const translations: Record<string, string> = {
+    expeditions: t('translation.expeditions'),
+    stats: t('translation.stats'),
+    traits: t('translation.traits'),
+  };
+
+  return translations[props.input] ?? 'Unknown value';
+});
 </script>
 
 <template>
   <button
     class="help-button"
-    data-tooltip="Help"
+    :data-tooltip="t('translation.help')"
     @click="showModal"
   >
     <img
-      alt="Help"
+      :alt="t('translation.help')"
       class="help-icon"
       loading="lazy"
       src="../assets/help.svg"
@@ -50,11 +63,11 @@ const closeModal = () => dialog.value?.close();
       <article>
         <header>
           <button
-            aria-label="Close"
+            :aria-label="t('translation.close')"
             class="close"
             @click="closeModal"
           ></button>
-          <p class="text-bold">Where to find {{ input }}</p>
+          <p class="text-bold">{{ t('translation.wheretofind') }} {{ translatedInput }}</p>
         </header>
         <div class="transition-container">
           <div
@@ -68,7 +81,7 @@ const closeModal = () => dialog.value?.close();
             <Transition>
               <img
                 v-if="openedOnce"
-                :alt="`Where to find ${input}`"
+                :alt="`${t('translation.wheretofind')} ${translatedInput}`"
                 :src="imageMapping[input]"
                 loading="lazy"
                 @load="isLoading = false"
