@@ -20,5 +20,10 @@ export default {
   website: 'Website',
   guide: 'A Guide to Evaluating Frigate Stats',
   formula: 'Formula sources:',
-  buyersguide: "Frigate Buyer's Guide - How to Pick the Best Ships (and avoid \"Lemons\")"
+  buyersguide: "Frigate Buyer's Guide - How to Pick the Best Ships (and avoid \"Lemons\")",
+  help: 'Help',
+  close: 'Close',
+  wheretofind: 'Where to find',
+  stats: "Stats",
+  traits: "Traits"
 };

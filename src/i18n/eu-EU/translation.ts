@@ -20,5 +20,10 @@ export default {
   website: 'Web orria',
   guide: 'Fragaten estatistikak ebaluatzeko gida',
   formula: 'Formulen iturria:',
-  buyersguide: "Fragatak erosteko gida: nola aukeratu ontzirik onenak (eta saihestu \“limoiak”\)"
+  buyersguide: "Fragatak erosteko gida: nola aukeratu ontzirik onenak (eta saihestu \“limoiak”\)",
+  help: 'Ayuda',
+  close: 'Cerrar',
+  wheretofind: 'Non Aurkitu',
+  stats: "Estatistikak",
+  traits: "Ezaugarriak",
 };

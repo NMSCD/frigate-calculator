@@ -20,5 +20,10 @@ export default {
   website: 'Página Web',
   guide: 'Una Guía para Evaluar las Estadísticas de las Fragatas',
   formula: 'Fuente Fórmulas:',
-  buyersguide: "Guía de Compra de Fragatas: Cómo Elegir las Mejores Naves (y Evitar los \“limones”\)"
+  buyersguide: "Guía de Compra de Fragatas: Cómo Elegir las Mejores Naves (y Evitar los \“limones”\)",
+  help: 'Ayuda',
+  close: 'Cerrar',
+  wheretofind: 'Dónde Encontrar',
+  stats: "Estadisticas",
+  traits: "Rasgos",
 };
