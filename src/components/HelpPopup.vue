@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, computed } from 'vue';
 import expeditionHelp from '@/assets/expeditions.webp';
 import statsHelp from '@/assets/stats.webp';
 import traitsHelp from '@/assets/traits.webp';
@@ -31,23 +31,15 @@ const showModal = () => {
 };
 const closeModal = () => dialog.value?.close();
 
-const translatedInput = ref<string>('');
+const translatedInput = computed(() => {
+  const translations: Record<string, string> = {
+    expeditions: t('translation.expeditions'),
+    stats: t('translation.stats'),
+    traits: t('translation.traits'),
+  };
 
-watch(
-  () => props.input,
-  (newValue) => {
-    if (newValue === 'expeditions') {
-      translatedInput.value = t('translation.expeditions');
-    } else if (newValue === 'stats') {
-      translatedInput.value = t('translation.stats');
-    } else if (newValue === 'traits') {
-      translatedInput.value = t('translation.traits');
-    } else {
-      translatedInput.value = 'Unknown value';
-    }
-  },
-  { immediate: true }
-);
+  return translations[props.input] ?? 'Unknown value';
+});
 </script>
 
 <template>
@@ -89,7 +81,7 @@ watch(
             <Transition>
               <img
                 v-if="openedOnce"
-                :alt="t('translation.wheretofind') ` ${translatedInput}`"
+                :alt="`${t('translation.wheretofind')} ${translatedInput}`"
                 :src="imageMapping[input]"
                 loading="lazy"
                 @load="isLoading = false"

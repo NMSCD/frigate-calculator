@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import NavBar from './components/NavBar.vue';
 import TraitInput from './components/TraitInput.vue';
 import StatInput from './components/StatInput.vue';
 import { isNumberInput } from './helpers/validation';
 import HelpPopup from './components/HelpPopup.vue';
 import { useI18n } from '@/hooks/useI18n';
-import { usePageDataStore } from '@/stores/pageData';
-import { storeToRefs } from 'pinia';
-
-const pageData = usePageDataStore();
-const { selectedLanguage } = storeToRefs(pageData);
 
 const { t } = useI18n();
 
@@ -26,21 +21,12 @@ const traitValues = ref<number[]>([0]);
 const addTrait = () => traitValues.value.push(0);
 const removeTrait = (index: number) => (traitValues.value = traitValues.value.filter((_, idx) => idx !== index));
 
-const stats = ref([
+const stats = computed(() => [
   t('translation.combat'),
   t('translation.exploration'),
   t('translation.industrial'),
   t('translation.trade'),
 ]);
-
-watch(selectedLanguage, () => {
-  stats.value = [
-    t('translation.combat'),
-    t('translation.exploration'),
-    t('translation.industrial'),
-    t('translation.trade'),
-  ];
-});
 
 const statValues = ref<number[]>(Array.from({ length: stats.value.length }, () => 0));
 
@@ -123,7 +109,7 @@ const progressClassName = computed(() => {
           class="add-trait-button"
           @click="addTrait"
         >
-        {{ t('translation.addtrait') }}
+          {{ t('translation.addtrait') }}
         </button>
         <p>{{ t('translation.totalBonusPoints') }} {{ combinedTraits }}</p>
       </fieldset>
