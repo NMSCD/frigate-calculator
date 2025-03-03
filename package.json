@@ -12,16 +12,16 @@
   "dependencies": {
     "@picocss/pico": "^2.0.6",
     "vue": "^3.5.13",
-    "vue-i18n": "^11.0.1"
+    "vue-i18n": "^11.1.1"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.13.5",
     "@vitejs/plugin-vue": "^5.2.1",
-    "@vueuse/core": "^12.2.0",
-    "prettier": "^3.4.2",
-    "sass-embedded": "^1.83.0",
-    "typescript": "5.7.2",
-    "vite": "^6.0.6",
-    "vue-tsc": "^2.2.0"
+    "@vueuse/core": "^12.7.0",
+    "prettier": "^3.5.3",
+    "sass-embedded": "^1.85.1",
+    "typescript": "5.8.2",
+    "vite": "^6.2.0",
+    "vue-tsc": "^2.2.8"
   }
 }
