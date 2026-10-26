@@ -18,7 +18,7 @@
     "@types/node": "^26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vueuse/core": "^15.0.0",
-    "prettier": "^3.9.9",
+    "prettier": "^3.9.10",
     "sass-embedded": "^1.105.1",
     "typescript": "5.9.3",
     "vite": "^8.3.5",
