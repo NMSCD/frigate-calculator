@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.5",
-    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitejs/plugin-vue": "^6.0.10",
     "@vueuse/core": "^15.0.0",
     "prettier": "^3.9.9",
     "sass-embedded": "^1.105.1",
